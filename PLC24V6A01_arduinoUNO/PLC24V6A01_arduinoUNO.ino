@@ -24,6 +24,7 @@ PLC24V6A01_arduinoUNO PLC24;
 //SoftwareSerial mySerial(2, 3); // RX, TX
 
 
+
 void setup()
 {
   lcd.init(); // initialize the lcd
@@ -35,60 +36,25 @@ void setup()
 
 void loop() // run over and over//
 {
-  int ser;
-  char* a = "";
-//  char b[16] = "";
-  int i = 0;
-    lcd.setCursor(0,0);
-  char Str[3]="RTP";
+  char* RTP="RTP";
+  char* RST="RST";
+  char* Ans = "";
+  lcd.setCursor(0,0);
 
-  a = PLC24.Read(Str[3]);
-//  mySerial.println("RTP"); //success
-////  mySerial.println("RTP"); //success
-////  mySerial.print("RTP\r"); //success
-////  mySerial.print("ARA\r"); // success
-//  delay(1000);
-//  while(mySerial.available()){
-//    ser = mySerial.read();
-//    if(ser==13){
-//      lcd.clear();
-//      lcd.setCursor(0,0);
-//      lcd.print(a);
-//      i = 0;
-////      for(int j=0;j<16;j++){
-////        a[j] = b[j];
-////      }
-//    } else if(i==16){
-//    } else if(ser==10){
-//    } else {
-//      a[i] = char(ser);
-//      i++;
-//    }
-//  }
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print(a);
-      i = 0;
-
+  PLC24.Read(RTP, &Ans);
+//  *Ans = *RTP;
+  lcd.clear();
+  delay(1000);
+  lcd.setCursor(0,0);
+  lcd.print(Ans);
+  delay(1000);
   
-Str[3]="RST";
-  a = PLC24.Read(Str[3]);
-//mySerial.println("RST"); //success
-//  delay(1000);
-//  while(mySerial.available()){
-//    ser = mySerial.read();
-//    if(ser==13){
-//    } else if(i==16){
-//    } else if(ser==10){
-//    } else {
-//      a[i] = char(ser);
-//      i++;
-//    }
-//  }
-      lcd.setCursor(0,1);
-      lcd.print(a);
-      i = 0;
+  Ans = RST;
+  PLC24.Read(RST, &Ans);
+  lcd.setCursor(0,1);
+  lcd.print(Ans);
 
+  delay(1000);
 }
 
 

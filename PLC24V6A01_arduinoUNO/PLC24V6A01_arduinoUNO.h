@@ -8,9 +8,9 @@
 class PLC24V6A01_arduinoUNO {
 public:
   InitRoutine();
-  char* Read(char Str[3]);
+  void Read(char* Str, char** Ans);
 private:
-
+  char* Ans;
 };
 
 #endif
