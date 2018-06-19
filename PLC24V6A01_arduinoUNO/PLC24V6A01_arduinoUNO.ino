@@ -42,7 +42,7 @@ void loop() // run over and over//
   lcd.setCursor(0,0);
 
   PLC24.Read(RTP, &Ans);
-//  *Ans = *RTP;
+
   lcd.clear();
   delay(1000);
   lcd.setCursor(0,0);
