@@ -18,11 +18,13 @@ ADM3202 16(VCC) <-> 3.3V
 #include <SoftwareSerial.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include "PLC24V6A01_arduinoUNO.h"
+#include <string.h>
+//#include "PLC24V6A01_arduinoUNO.h"
 LiquidCrystal_I2C lcd(0x27,16,2); // set the LCD address to 0x27 for a 16 chars and 2 line display
-PLC24V6A01_arduinoUNO PLC24;
-//SoftwareSerial mySerial(2, 3); // RX, TX
 
+SoftwareSerial mySerial(2, 3); // RX, TX
+
+//PLC24V6A01_arduinoUNO PLC24;
 
 
 void setup()
@@ -30,13 +32,43 @@ void setup()
   lcd.init(); // initialize the lcd
   lcd.init();
   lcd.backlight();
-  PLC24.InitRoutine();
+  mySerial.begin(115200);
+  mySerial.println("STE,3040"); //success
+  mySerial.println("STO"); //success
+//  PLC24.InitRoutine();
 
 }
 
 void loop() // run over and over//
 {
   char* RTP="RTP";
+  char* RST="RST";
+  char a[16];
+  char* Ans = a;
+
+  int ser;
+
+  int i = 0;
+  lcd.clear();
+  Read(RST, &Ans);
+  lcd.setCursor(0,0);
+  lcd.print(Ans);
+  delay(1000);
+  memset(a, '\0',strlen(a));
+  Ans = a;
+//  Read(RTP, &Ans);
+//  lcd.setCursor(0,0);
+//  lcd.print(Ans);
+//  delay(1000);
+//  memset(a, '\0',strlen(a));
+//  Ans = a;
+
+//  memset(a, '\0',strlen(a));
+//  Read(RST, &Ans);
+//  lcd.setCursor(0,0);
+//  lcd.print(Ans);
+
+/*  char* RTP="RTP";
   char* RST="RST";
   char* Ans = "";
   lcd.setCursor(0,0);
@@ -54,6 +86,31 @@ void loop() // run over and over//
   lcd.setCursor(0,1);
   lcd.print(Ans);
 
+  delay(1000);
+*/
+}
+void Read(char* Str, char** Ans){
+  char a[16] = "";
+  int i = 0;
+  int ser;
+  lcd.print(Str);
+  mySerial.println(Str); //success
+  delay(1000);
+  while(mySerial.available()){
+    ser = mySerial.read();
+    if(ser==13){
+        *Ans= a;
+        lcd.setCursor(14,1);
+        lcd.print(i);
+    } else if(i==16){
+    } else if(ser==10){
+    } else {
+      a[i] = char(ser);
+      lcd.setCursor(i,1);
+      lcd.print(a[i]);
+      i++;
+    }
+  }
   delay(1000);
 }
 

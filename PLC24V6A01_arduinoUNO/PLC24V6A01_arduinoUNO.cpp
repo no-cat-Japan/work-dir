@@ -32,12 +32,12 @@ ADM3202 16(VCC) <-> 3.3V
 #include "PLC24V6A01_arduinoUNO.h"
 #include <SoftwareSerial.h>
 
-SoftwareSerial mySerial(2, 3); // RX, TX
+//SoftwareSerial mySerial(2, 3); // RX, TX
 
 PLC24V6A01_arduinoUNO::InitRoutine(){
-  mySerial.begin(115200);
-  mySerial.println("STE,3040"); //success
-  mySerial.println("STO"); //success
+//  mySerial.begin(115200);
+//  mySerial.println("STE,3040"); //success
+//  mySerial.println("STO"); //success
 
 }
 void PLC24V6A01_arduinoUNO::Read(char* Str, char** Ans){
@@ -45,10 +45,10 @@ void PLC24V6A01_arduinoUNO::Read(char* Str, char** Ans){
   int i = 0;
   int ser;
 
-  mySerial.println(Str); //success
+//  mySerial.println(Str); //success
   delay(1000);
-  while(mySerial.available()){
-    ser = mySerial.read();
+//  while(mySerial.available()){
+//    ser = mySerial.read();
     if(ser==13){
         *Ans= a;
 //        *Ans= Str;
@@ -58,6 +58,6 @@ void PLC24V6A01_arduinoUNO::Read(char* Str, char** Ans){
       a[i] = char(ser);
       i++;
     }
-  }
+//  }
 }
 
