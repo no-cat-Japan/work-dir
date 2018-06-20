@@ -9,8 +9,9 @@ class PLC24V6A01_arduinoUNO {
 public:
   InitRoutine();
   void SetMod();
-  void ReadBase(char** Ans0);
-  void Read(char Str[3], char** Ans);
+  String ReadBase(String Ans0);
+  String Read(String Str, String Ans);
+  String RST(String Ans);
   void SetTemp(char Str[2]);
   void StatCtrl();
 private:

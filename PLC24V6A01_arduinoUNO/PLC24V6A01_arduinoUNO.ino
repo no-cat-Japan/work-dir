@@ -21,11 +21,11 @@ ADM3202 16(VCC) <-> 3.3V
 LiquidCrystal_I2C lcd(0x27,16,2); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 PLC24V6A01_arduinoUNO PLC24;
+String RST=String("RST");
+String RTP=String("RTP");
+String Ans=String("");
 
-  char RST[4]="RST";
-  char RTP[4]="RTP";
-  char* Ans;
-  char Temp[2]="25";
+char Temp[2]="20";
 void setup()
 {
   lcd.init(); // initialize the lcd
@@ -38,7 +38,6 @@ void setup()
 
 void loop() // run over and over//
 {
-
   lcd.clear();
   lcd.setCursor(0,0);
   PLC24.SetTemp(Temp);
@@ -47,8 +46,12 @@ void loop() // run over and over//
   delay(1000);
 
   while(1){
-  lcd.setCursor(0,1);
-    PLC24.Read(RTP, &Ans);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    Ans = PLC24.RST(Ans);
+    lcd.print(Ans);
+    lcd.setCursor(0,1);
+    Ans = PLC24.Read(RTP, Ans);
     lcd.print(Ans);
     delay(1000);
   }
