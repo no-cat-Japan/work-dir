@@ -27,17 +27,17 @@ PLC24V6A01_arduinoUNO::InitRoutine(){
   mySerial.println("STO"); //success
 }
 
-void PLC24V6A01_arduinoUNO::Read(char Str[3], char** Ans){
+void PLC24V6A01_arduinoUNO::ReadBase(char** Ans0){
   char a[16];
   int i = 0;
   int ser;
-  mySerial.println(Str); //success
   delay(1000);
   while(mySerial.available()){
     ser = mySerial.read();
     if(ser==13){
-        a[i]='\0';
-        *Ans= a;
+//        a[i]='\0';
+        a[13]='\0';
+        *Ans0= a;
         i = 0;
     } else if(i==16){
     } else if(ser==10){
@@ -45,6 +45,30 @@ void PLC24V6A01_arduinoUNO::Read(char Str[3], char** Ans){
       a[i] = char(ser);
       i++;
     }
+    delay(50);
   }
+}
+
+void PLC24V6A01_arduinoUNO::Read(char Str[3], char** Ans){
+  mySerial.println(Str); //success
+  PLC24V6A01_arduinoUNO::ReadBase(Ans);
+}
+
+void PLC24V6A01_arduinoUNO::SetTemp(char Str[2]){
+  char STE[8]="STE,2500";
+  STE[4]=Str[0];
+  STE[5]=Str[1];
+  mySerial.println(STE); //success
+  delay(500);
+}
+
+void PLC24V6A01_arduinoUNO::SetMod(){
+  mySerial.println("STT,CONT"); //success
+  delay(500);
+}
+
+void PLC24V6A01_arduinoUNO::StatCtrl(){
+  mySerial.println("STA"); //success
+//  PLC24V6A01_arduinoUNO::ReadBase(Ans);
 }
 

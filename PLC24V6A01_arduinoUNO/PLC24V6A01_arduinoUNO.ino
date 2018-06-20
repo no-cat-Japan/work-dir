@@ -25,7 +25,7 @@ PLC24V6A01_arduinoUNO PLC24;
   char RST[4]="RST";
   char RTP[4]="RTP";
   char* Ans;
-
+  char Temp[2]="25";
 void setup()
 {
   lcd.init(); // initialize the lcd
@@ -41,10 +41,17 @@ void loop() // run over and over//
 
   lcd.clear();
   lcd.setCursor(0,0);
-  PLC24.Read(RTP, &Ans);
-  lcd.print(Ans);
-  lcd.setCursor(0,1);
+  PLC24.SetTemp(Temp);
+  PLC24.SetMod();   //Set the drive mode
+  PLC24.StatCtrl(); //Start the temperatur control
   delay(1000);
+
+  while(1){
+  lcd.setCursor(0,1);
+    PLC24.Read(RTP, &Ans);
+    lcd.print(Ans);
+    delay(1000);
+  }
 
 }
 
