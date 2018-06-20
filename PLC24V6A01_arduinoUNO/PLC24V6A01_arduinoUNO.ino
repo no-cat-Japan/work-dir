@@ -41,32 +41,25 @@ void setup()
 
 void loop() // run over and over//
 {
-  char* RTP="RTP";
-  char* RST="RST";
+  char RST[4]={'R','S','T','\0'};
   char a[16];
-  char* Ans = a;
+  a[16]='\0';
+  char RTP[4]={'R','T','P','\0'};
+  char* Ans=a;
 
   int ser;
 
   int i = 0;
   lcd.clear();
-  Read(RST, &Ans);
   lcd.setCursor(0,0);
+  Read(RTP, &Ans);
+  lcd.print(Ans);
+  lcd.setCursor(0,1);
+//  *Ans = a;
+  Read2(RST, &Ans);
   lcd.print(Ans);
   delay(1000);
-  memset(a, '\0',strlen(a));
-  Ans = a;
-//  Read(RTP, &Ans);
-//  lcd.setCursor(0,0);
-//  lcd.print(Ans);
-//  delay(1000);
 //  memset(a, '\0',strlen(a));
-//  Ans = a;
-
-//  memset(a, '\0',strlen(a));
-//  Read(RST, &Ans);
-//  lcd.setCursor(0,0);
-//  lcd.print(Ans);
 
 /*  char* RTP="RTP";
   char* RST="RST";
@@ -89,29 +82,48 @@ void loop() // run over and over//
   delay(1000);
 */
 }
-void Read(char* Str, char** Ans){
-  char a[16] = "";
+//void Read(char* Str, char** Ans){
+void Read(char Str[3], char** Ans){
+  char a[16];
+  a[16]='\0';
   int i = 0;
   int ser;
-  lcd.print(Str);
   mySerial.println(Str); //success
   delay(1000);
   while(mySerial.available()){
     ser = mySerial.read();
     if(ser==13){
+        a[i]='\0';
         *Ans= a;
-        lcd.setCursor(14,1);
-        lcd.print(i);
+        i = 0;
     } else if(i==16){
     } else if(ser==10){
     } else {
       a[i] = char(ser);
-      lcd.setCursor(i,1);
-      lcd.print(a[i]);
       i++;
     }
   }
+}
+void Read2(char Str[3], char** Ans){
+  char a[16];
+  a[16]='\0';
+  int i = 0;
+  int ser;
+  mySerial.println(Str); //success
   delay(1000);
+  while(mySerial.available()){
+    ser = mySerial.read();
+    if(ser==13){
+        a[i]='\0';
+        *Ans= a;
+        i = 0;
+    } else if(i==16){
+    } else if(ser==10){
+    } else {
+      a[i] = char(ser);
+      i++;
+    }
+  }
 }
 
 
