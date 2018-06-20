@@ -15,116 +15,36 @@ ADM3202 15(GND) <-> 0.1uF <-> ADM3202 16(VCC)
 ADM3202 16(VCC) <-> 3.3V
 */
 
-#include <SoftwareSerial.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include <string.h>
-//#include "PLC24V6A01_arduinoUNO.h"
+#include "PLC24V6A01_arduinoUNO.h"
 LiquidCrystal_I2C lcd(0x27,16,2); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
-SoftwareSerial mySerial(2, 3); // RX, TX
+PLC24V6A01_arduinoUNO PLC24;
 
-//PLC24V6A01_arduinoUNO PLC24;
-
+  char RST[4]="RST";
+  char RTP[4]="RTP";
+  char* Ans;
 
 void setup()
 {
   lcd.init(); // initialize the lcd
   lcd.init();
   lcd.backlight();
-  mySerial.begin(115200);
-  mySerial.println("STE,3040"); //success
-  mySerial.println("STO"); //success
-//  PLC24.InitRoutine();
+
+  PLC24.InitRoutine();
 
 }
 
 void loop() // run over and over//
 {
-  char RST[4]={'R','S','T','\0'};
-  char a[16];
-  a[16]='\0';
-  char RTP[4]={'R','T','P','\0'};
-  char* Ans=a;
 
-  int ser;
-
-  int i = 0;
   lcd.clear();
   lcd.setCursor(0,0);
-  Read(RTP, &Ans);
-  lcd.print(Ans);
-  lcd.setCursor(0,1);
-//  *Ans = a;
-  Read2(RST, &Ans);
-  lcd.print(Ans);
-  delay(1000);
-//  memset(a, '\0',strlen(a));
-
-/*  char* RTP="RTP";
-  char* RST="RST";
-  char* Ans = "";
-  lcd.setCursor(0,0);
-
   PLC24.Read(RTP, &Ans);
-
-  lcd.clear();
-  delay(1000);
-  lcd.setCursor(0,0);
   lcd.print(Ans);
-  delay(1000);
-  
-  Ans = RST;
-  PLC24.Read(RST, &Ans);
   lcd.setCursor(0,1);
-  lcd.print(Ans);
-
   delay(1000);
-*/
-}
-//void Read(char* Str, char** Ans){
-void Read(char Str[3], char** Ans){
-  char a[16];
-  a[16]='\0';
-  int i = 0;
-  int ser;
-  mySerial.println(Str); //success
-  delay(1000);
-  while(mySerial.available()){
-    ser = mySerial.read();
-    if(ser==13){
-        a[i]='\0';
-        *Ans= a;
-        i = 0;
-    } else if(i==16){
-    } else if(ser==10){
-    } else {
-      a[i] = char(ser);
-      i++;
-    }
-  }
-}
-void Read2(char Str[3], char** Ans){
-  char a[16];
-  a[16]='\0';
-  int i = 0;
-  int ser;
-  mySerial.println(Str); //success
-  delay(1000);
-  while(mySerial.available()){
-    ser = mySerial.read();
-    if(ser==13){
-        a[i]='\0';
-        *Ans= a;
-        i = 0;
-    } else if(i==16){
-    } else if(ser==10){
-    } else {
-      a[i] = char(ser);
-      i++;
-    }
-  }
-}
 
-
+}
 

@@ -1,16 +1,3 @@
-#include <Bridge.h>
-#include <BridgeClient.h>
-#include <BridgeServer.h>
-#include <BridgeSSLClient.h>
-#include <BridgeUdp.h>
-#include <Console.h>
-#include <FileIO.h>
-#include <HttpClient.h>
-#include <Mailbox.h>
-#include <Process.h>
-#include <YunClient.h>
-#include <YunServer.h>
-
 /*
 ADM3202 1(C1+) <-> 0.1uF <-> ADM3202 3(C1-)
 ADM3202 2(V+) <-> 0.1uF <-> ADM3202 16(VCC)
@@ -32,32 +19,32 @@ ADM3202 16(VCC) <-> 3.3V
 #include "PLC24V6A01_arduinoUNO.h"
 #include <SoftwareSerial.h>
 
-//SoftwareSerial mySerial(2, 3); // RX, TX
+SoftwareSerial mySerial(2, 3); // RX, TX
 
 PLC24V6A01_arduinoUNO::InitRoutine(){
-//  mySerial.begin(115200);
-//  mySerial.println("STE,3040"); //success
-//  mySerial.println("STO"); //success
-
+  mySerial.begin(115200);
+  mySerial.println("STE,3040"); //success
+  mySerial.println("STO"); //success
 }
-void PLC24V6A01_arduinoUNO::Read(char* Str, char** Ans){
-  char a[16] = "";
+
+void PLC24V6A01_arduinoUNO::Read(char Str[3], char** Ans){
+  char a[16];
   int i = 0;
   int ser;
-
-//  mySerial.println(Str); //success
+  mySerial.println(Str); //success
   delay(1000);
-//  while(mySerial.available()){
-//    ser = mySerial.read();
+  while(mySerial.available()){
+    ser = mySerial.read();
     if(ser==13){
+        a[i]='\0';
         *Ans= a;
-//        *Ans= Str;
+        i = 0;
     } else if(i==16){
     } else if(ser==10){
     } else {
       a[i] = char(ser);
       i++;
     }
-//  }
+  }
 }
 
