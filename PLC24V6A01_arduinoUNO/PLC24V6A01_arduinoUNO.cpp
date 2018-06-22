@@ -50,7 +50,7 @@ String PLC24V6A01_arduinoUNO::ReadBase(){
     }
     delay(50);
   }
-//  a[17]='\0';
+  a[17]='\0';  //backup
   return Ans0;
 }
 
