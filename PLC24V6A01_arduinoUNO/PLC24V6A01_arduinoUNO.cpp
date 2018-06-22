@@ -21,6 +21,8 @@ ADM3202 16(VCC) <-> 3.3V
 
 SoftwareSerial mySerial(2, 3); // RX, TX
 
+int DlyTm=300;
+
 PLC24V6A01_arduinoUNO::InitRoutine(){
   mySerial.begin(115200);
   mySerial.println("STE,3040"); //success
@@ -33,16 +35,13 @@ String PLC24V6A01_arduinoUNO::ReadBase(){
   int j = 0; //cursol position
   int ser;
   String Ans0;
-  delay(1000);
+  delay(200);
   while(mySerial.available()){
     ser = mySerial.read();
     if(ser==13){
         a[j]='\0';
         Ans0= a;
-//    } else if(i==16){
     } else if(ser==10){
-//    } else if(i<4){
-//      i++;
     } else {
       a[j] = char(ser);
       i++;
@@ -50,7 +49,7 @@ String PLC24V6A01_arduinoUNO::ReadBase(){
     }
     delay(50);
   }
-  a[17]='\0';  //backup
+  a[30]='\0';  //backup
   return Ans0;
 }
 
@@ -74,19 +73,20 @@ void PLC24V6A01_arduinoUNO::SetTemp(char Str[2]){
   mySerial.println(STE); //success
   String Ans;
   PLC24V6A01_arduinoUNO::ReadBase();
-  delay(500);
+  delay(DlyTm);
 }
 
 void PLC24V6A01_arduinoUNO::SetMod(){
   mySerial.println("STT,CONT"); //success
   String Ans;
   PLC24V6A01_arduinoUNO::ReadBase();
-  delay(500);
+  delay(DlyTm);
 }
 
 void PLC24V6A01_arduinoUNO::StatCtrl(){
   mySerial.println("STO"); //success
   String Ans;
   PLC24V6A01_arduinoUNO::ReadBase();
+  delay(DlyTm);
 }
 

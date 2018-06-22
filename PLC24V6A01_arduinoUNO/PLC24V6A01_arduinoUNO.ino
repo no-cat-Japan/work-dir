@@ -43,7 +43,7 @@ void loop() // run over and over//
   PLC24.SetTemp(Temp);
   PLC24.SetMod();   //Set the drive mode
   PLC24.StatCtrl(); //Start the temperatur control
-  delay(1000);
+//  delay(1000);
 
   while(1){
     lcd.clear();
