@@ -48,7 +48,7 @@ void loop() // run over and over//
   while(1){
     lcd.clear();
     lcd.setCursor(0,0);
-    Ans = PLC24.RST(Ans);
+    Ans = PLC24.RST();
     lcd.print(Ans);
     lcd.setCursor(0,1);
     Ans = PLC24.Read(RTP, Ans);
