@@ -15,24 +15,32 @@ ADM3202 15(GND) <-> 0.1uF <-> ADM3202 16(VCC)
 ADM3202 16(VCC) <-> 3.3V
 */
 
+/*
+ PLC24.STE("xxxxx") //-9999 < xxxx < 09999  (00001 = 0.01 degrees C)
+ PLC24.STH("xxxx") //1 < xxxx < 7200  (0001 = 0.1 hour)
+ PLC24.STM("xxxx") //1 < xxxx < 9999  (0001 = 0.1 minit)
+ PLC24.STT("xxxx") // xxxx = CONT or TIME
+ PLC24.SPT("xxxxx") //-9999 < xxxx < 09999  (00001 = 0.01 degrees C)
+ PLC24.WAS("x") // x =1 or 0  (1:ON, 2:OFF)
+ PLC24.WAC("x") // x =1 or 0  (1:ON, 2:OFF)
+ PLC24.WAF("x") // x =1 or 0  (1:ON, 2:OFF)
+ PLC24.WAV("x") // x =1 or 0  (1:ON, 2:OFF)
+ */
+
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include "PLC24V6A01_arduinoUNO.h"
 LiquidCrystal_I2C lcd(0x27,16,2); // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 PLC24V6A01_arduinoUNO PLC24;
-String RST=String("RST");
-String RTP=String("RTP");
-String Ans=String("");
 
-char Temp[2]="20";
 void setup()
 {
   lcd.init(); // initialize the lcd
   lcd.init();
   lcd.backlight();
 
-  PLC24.InitRoutine();
+  PLC24.Init();
 
 }
 
@@ -40,24 +48,18 @@ void loop() // run over and over//
 {
   lcd.clear();
   lcd.setCursor(0,0);
-  PLC24.SetTemp(Temp);
-  PLC24.SetMod();   //Set the drive mode
-  PLC24.StatCtrl(); //Start the temperatur control
-//  delay(1000);
-
-  while(1){
-    int i;
-    lcd.clear();
+  lcd.print(PLC24.STE("2000"));
+  lcd.setCursor(0,1);
+  lcd.print(PLC24.STA()); //Start the temperatur control
+  for (int i=0;i<5;i++){
     lcd.setCursor(0,0);
-    Ans = PLC24.RTP();
-//    Ans = Ans.substring(0,16);
-    lcd.print(Ans);
-    lcd.setCursor(0,1);
-    Ans = PLC24.RST();
-//    Ans = Ans.substring(0,16);
-    lcd.print(Ans);
+    lcd.print(PLC24.RTP());
     delay(1000);
   }
+  lcd.setCursor(0,0);
+  lcd.print(PLC24.STO());
+
+  while(1);
 
 }
 
