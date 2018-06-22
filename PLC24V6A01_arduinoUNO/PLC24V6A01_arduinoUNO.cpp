@@ -30,27 +30,22 @@ PLC24V6A01_arduinoUNO::InitRoutine(){
 }
 
 String PLC24V6A01_arduinoUNO::ReadBase(){
-  char a[16];
+  String a=String("                              ");
   int i = 0; //conter
-  int j = 0; //cursol position
   int ser;
   String Ans0;
   delay(200);
   while(mySerial.available()){
     ser = mySerial.read();
     if(ser==13){
-        a[j]='\0';
-        Ans0= a;
     } else if(ser==10){
     } else {
-      a[j] = char(ser);
+      a.setCharAt(i,char(ser));
       i++;
-      j++;
     }
     delay(50);
   }
-  a[30]='\0';  //backup
-  return Ans0;
+  return a;
 }
 
 String PLC24V6A01_arduinoUNO::Read(String Str, String Ans){
