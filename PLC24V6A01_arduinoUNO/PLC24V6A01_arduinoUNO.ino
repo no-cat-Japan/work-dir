@@ -46,12 +46,15 @@ void loop() // run over and over//
 //  delay(1000);
 
   while(1){
+    int i;
     lcd.clear();
     lcd.setCursor(0,0);
-    Ans = PLC24.RST();
+    Ans = PLC24.RTP();
+//    Ans = Ans.substring(0,16);
     lcd.print(Ans);
     lcd.setCursor(0,1);
-    Ans = PLC24.Read(RTP, Ans);
+    Ans = PLC24.RST();
+//    Ans = Ans.substring(0,16);
     lcd.print(Ans);
     delay(1000);
   }

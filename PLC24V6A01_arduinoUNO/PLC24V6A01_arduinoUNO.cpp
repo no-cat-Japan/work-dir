@@ -54,13 +54,55 @@ String PLC24V6A01_arduinoUNO::ReadBase(){
 }
 
 String PLC24V6A01_arduinoUNO::Read(String Str, String Ans){
-  mySerial.println(Str); //success
+  mySerial.println(Str);
+  Ans = PLC24V6A01_arduinoUNO::ReadBase();
+  return Ans;
+}
+
+String PLC24V6A01_arduinoUNO::RTP(){
+  mySerial.println("RTP");
+  String Ans;
   Ans = PLC24V6A01_arduinoUNO::ReadBase();
   return Ans;
 }
 
 String PLC24V6A01_arduinoUNO::RST(){
-  mySerial.println("RST"); //success
+  mySerial.println("RST");
+  String Ans;
+  Ans = PLC24V6A01_arduinoUNO::ReadBase();
+  return Ans;
+}
+
+String PLC24V6A01_arduinoUNO::RAL(){
+  mySerial.println("RAL");
+  String Ans;
+  Ans = PLC24V6A01_arduinoUNO::ReadBase();
+  return Ans;
+}
+
+String PLC24V6A01_arduinoUNO::RTM(){
+  mySerial.println("RTM");
+  String Ans;
+  Ans = PLC24V6A01_arduinoUNO::ReadBase();
+  return Ans;
+}
+
+String PLC24V6A01_arduinoUNO::RCO(){
+  mySerial.println("RCO");
+  String Ans;
+  Ans = PLC24V6A01_arduinoUNO::ReadBase();
+  return Ans;
+}
+
+String PLC24V6A01_arduinoUNO::RTS(){
+  mySerial.println("RTS");
+  String Ans;
+  Ans = PLC24V6A01_arduinoUNO::ReadBase();
+  return Ans;
+}
+
+String PLC24V6A01_arduinoUNO::RLD(){
+  mySerial.println("RLD");
   String Ans;
   Ans = PLC24V6A01_arduinoUNO::ReadBase();
   return Ans;
@@ -70,21 +112,21 @@ void PLC24V6A01_arduinoUNO::SetTemp(char Str[2]){
   char STE[8]="STE,2500";
   STE[4]=Str[0];
   STE[5]=Str[1];
-  mySerial.println(STE); //success
+  mySerial.println(STE);
   String Ans;
   PLC24V6A01_arduinoUNO::ReadBase();
   delay(DlyTm);
 }
 
 void PLC24V6A01_arduinoUNO::SetMod(){
-  mySerial.println("STT,CONT"); //success
+  mySerial.println("STT,CONT");
   String Ans;
   PLC24V6A01_arduinoUNO::ReadBase();
   delay(DlyTm);
 }
 
 void PLC24V6A01_arduinoUNO::StatCtrl(){
-  mySerial.println("STO"); //success
+  mySerial.println("STO");
   String Ans;
   PLC24V6A01_arduinoUNO::ReadBase();
   delay(DlyTm);

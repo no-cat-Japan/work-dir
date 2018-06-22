@@ -11,7 +11,13 @@ public:
   void SetMod();
   String ReadBase();
   String Read(String Str, String Ans);
+  String RTP();
   String RST();
+  String RAL();
+  String RTM();
+  String RCO();
+  String RTS();
+  String RLD();
   void SetTemp(char Str[2]);
   void StatCtrl();
   
