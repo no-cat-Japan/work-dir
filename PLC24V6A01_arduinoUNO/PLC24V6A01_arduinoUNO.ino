@@ -39,25 +39,34 @@ void setup()
   lcd.init(); // initialize the lcd
   lcd.init();
   lcd.backlight();
-
-  PLC24.Init();
-
 }
 
 void loop() // run over and over//
 {
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print(PLC24.STE("2000"));
+  lcd.print(PLC24.STE_01("2000"));
   lcd.setCursor(0,1);
-  lcd.print(PLC24.STA()); //Start the temperatur control
+  lcd.print(PLC24.STE_02("3000"));
+  lcd.setCursor(0,0);
+  lcd.print(PLC24.STA_01()); //Start the temperatur control
+  lcd.setCursor(0,1);
+  lcd.print(PLC24.STA_02()); //Start the temperatur control
   for (int i=0;i<5;i++){
     lcd.setCursor(0,0);
-    lcd.print(PLC24.RTP());
+    lcd.print(PLC24.RTP_01());
+    lcd.setCursor(0,1);
+    lcd.print(PLC24.RTP_02());
     delay(1000);
   }
   lcd.setCursor(0,0);
-  lcd.print(PLC24.STO());
+  lcd.print(PLC24.STO_01());
+  lcd.setCursor(0,1);
+  lcd.print(PLC24.STO_02());
+  lcd.setCursor(0,0);
+  lcd.print(PLC24.RST_01());
+  lcd.setCursor(0,1);
+  lcd.print(PLC24.RST_02());
 
   while(1);
 
