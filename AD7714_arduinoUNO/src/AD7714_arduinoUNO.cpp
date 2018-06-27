@@ -62,11 +62,6 @@ Arduino Digital SCL <-----> 1602 I2C PIN 4 (SCL)
 #define ZCRg 6  // Zero-scale Calibration Register
 #define FCRg 7  // Full-scale Calibration Register
 
-// define Calibration
-#define SlfCali 1 // Self calibration
-#define ZeScCali 2 // Zero scale calibration
-#define FlScCali 3 // Full scale calibration
-#define SOCali 4 // System ofset calibration
 
 // define Gain
 #define Gain1 0 // Data Register
@@ -95,7 +90,11 @@ void AD7714_UNO::InitRoutine(byte FHhi,byte filtFH, byte filtFL, byte ain){
   AD7714_UNO::writeByteRegister(FHRg, FHhi|filtFH, ain);  //set the filterHigh registar
   AD7714_UNO::writeByteRegister(FLRg, filtFL, ain);  //set the filterLow registar
 
-  AD7714_UNO::writeByteRegister(MoRg, (SlfCali<<5)|(Gain1<<2), ain);  //Self Calibration
+  while(digitalRead(dataReady)); //
+}
+
+void AD7714_UNO::Calibration(byte Calib, byte Gain, byte ain){
+  AD7714_UNO::writeByteRegister(MoRg, (Calib<<5)|(Gain<<2), ain);  //Calibration
   while(digitalRead(dataReady)); //
 }
 
